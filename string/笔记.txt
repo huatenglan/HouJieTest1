@@ -1,0 +1,14 @@
+成员带指针的类一定要自己写拷贝构造。原因：合成拷贝构造只会拷贝指针，并不能得到真正意义上的两份数据
+做拷贝赋值函数要检测“自我赋值” 流程：1.检测自我赋值 ；2.delete原有指针；3.分配大小和参数一样大的内存；4.拷贝
+new:先分配memory，再调用ctor .编译器完成三个步骤: A* pc = new A(param)
+		1.void* mem = operator new (sizeof (A) );	//分配内存
+		2.pc = static_cast<A*> (mem) ;
+		3.pc->A :: A(param);
+delete:先调用dtor，再释放memory 编译器完成两个步骤：delete ps;
+		A :: ~A(ps);		//因此，需要在析构函数中释放掉动态分配出的内存
+		operator delete (ps);		//内部调用free(ps);
+
+视频8中详细讲解了new delete下，编译器对机器内存所做的事情
+		头尾：各4字节的cookie，包裹数据包（指出有多少内存，1是分配2是释放）
+		debug模式还有8个4字节header和一个4字节尾巴
+		加一起不够16倍数，还需要弄一些4字节pad填充

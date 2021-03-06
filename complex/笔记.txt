@@ -1,0 +1,3 @@
+需要返回value而不是reference的情况：需要新创建一个临时内存返回（不然尽量都用return to reference）
+对于return to reference的声明， 其实不用管return的是value还是reference 
+<<只能写global的函数
