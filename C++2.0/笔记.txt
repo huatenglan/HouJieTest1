@@ -1,0 +1,11 @@
+GCC编译器是unix的，用MinGW搬到windows上
+
+//---------------------------------------------------------------
+1、Variadic Templates
+void printX() {}
+
+template <typename T,typename... Types>
+void printX(const T& firstArg, const Types&... args) {
+	cout << firstArg << endl;
+	printX(args...);
+}
